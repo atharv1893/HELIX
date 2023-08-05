@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href = "report.css">
+   
+    <title>Helix: Report</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+</head>
+<body>
+
+        <div class="background">
+            <img src = "login_bg.png">
+        </div>
+    <div class="overlay"></div>
+    <div class="register">
+    <div class="login-form">
+        <div class="form-logo">
+            <img src="logo_crop2.png">
+         </div>
+        <h3>Doctor Information Form </h3>
+
+        <form action="report.php"id = "myForm" method="POST">
+       
+            <form id="professionForm">
+                <div class="input">
+
+                    <label for="doctorName">Doctor's Name:</label>
+                    <input type="text" id="DoctorName" name="doctorName" required>
+                    
+                    <label for="doctorDescription">Specialist in which field:</label>
+                    <input id="DoctorDescription" name="doctorDescription" required></input>
+
+                    <label for="doctorLocation">Location:</label>
+                    <textarea type="text" id="DoctorLocation" name="doctorLocation" required></textarea>
+                    
+                    <button type="submit" id = "submit" name = "submit" class = "btn-submit">Submit</button>
+                      
+                </div>
+              </form>
+
+              
+    </form>
+   </div>
+   <div class="information">
+       <h5><a href = "terms.html">Terms and Conditions</a></h5>
+       <h5><a href = "privacy_policy.html">Privacy Policy </a></h5>
+       <h5><a href = "member_login.html">Member Login</a></h5>
+       <h5><a href = "contact.html">Contact us</a></h5>
+       <h5><a href = "register.html">Sign In</a></h5>
+      </div>
+
+</body>
+</html>

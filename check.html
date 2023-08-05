@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Location Search</title>
+  <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
+  <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
+  <script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
+  <script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+</head>
+<style>
+      #map {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top:0cm;
+        z-index: -1;
+      }
+      #searchInput{
+        z-index: 99;
+      }
+      button{
+        z-index: 99;
+      }
+</style>
+<body>
+    <input type="text" id="searchInput" placeholder="Enter location">
+    <button onclick="convertToCoordinates()">Convert</button>
+    <div id="map"></div>
+    <div id="hospital" class="hospital"></div>
+    
+   
+  <script>
+   function convertToCoordinates() {
+  var searchValue = document.getElementById('searchInput').value;
+
+  // Replace 'YOUR_API_KEY' with your actual OpenCage API key
+  var apiKey = 'fb87072a45394821904e16450b724c48';
+
+  var url = 'https://api.opencagedata.com/geocode/v1/json?q=' + encodeURIComponent(searchValue) + '&key=' + apiKey;
+
+  fetch(url)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      var results = data.results;
+      if (results.length > 0) {
+        var latitude = results[0].geometry.lat;
+        var longitude = results[0].geometry.lng;
+        console.log('Latitude: ' + latitude);
+        console.log('Longitude: ' + longitude);
+
+        // Add a marker on the map
+        const markerIcon = L.icon({
+          iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+          shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+          iconSize: [25, 41],
+          iconAnchor: [12, 41],
+          shadowSize: [41, 41]
+        });
+        const marker = L.marker([latitude, longitude], { icon: markerIcon }).addTo(map);
+        marker.bindPopup('Location').openPopup();
+
+        // Zoom the map to the marker
+        map.setView([latitude, longitude], 14);
+      } else {
+        console.log('Location not found');
+      }
+    })
+    .catch(function(error) {
+      console.error(error);
+    });
+}
+
+  </script>
+<script>
+    const apikey = "K2uhMneJS78v6v29URO_WNW6ktUisDimbYmyKDNxg6Q";
+  
+    const platform = new H.service.Platform({
+      apikey: apikey
+    });
+  
+    // Initialize the map
+    const map = L.map('map').setView(['19.267924', '72.967252'], 12);
+  
+    // Add the OpenStreetMap tiles to the map
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+      maxZoom: 18,
+    }).addTo(map);
+  
+    // Function to find nearby doctors
+    function findNearbyDoctors(latitude, longitude) {
+      // Create a service object to perform the search
+      const service = platform.getSearchService();
+  
+      // Define the search parameters
+      const params = {
+        q: "doctor",
+        at: `${latitude},${longitude}`,
+        limit: 10 // Adjust the limit as per your requirement
+      };
+  
+      // Execute the search request
+      service.discover(params, (result) => {
+        const doctors = result.items;
+  
+        doctors.forEach((doctor) => {
+          const { title, position: { lat, lng }, address } = doctor;
+  
+          // Add a marker for each doctor
+          const doctorMarker = L.marker([lat, lng]).addTo(map);
+          doctorMarker.bindPopup(`<b>${title}</b><br><p><b>Location:</b> ${address.label}</p>`).openPopup();
+        });
+      }, console.error);
+    }
+  
+    // Function to convert location input into coordinates
+    function convertToCoordinates() {
+      var searchValue = document.getElementById('searchInput').value;
+  
+      // Replace 'YOUR_API_KEY' with your actual OpenCage API key
+      var apiKey = 'fb87072a45394821904e16450b724c48';
+  
+      var url = 'https://api.opencagedata.com/geocode/v1/json?q=' + encodeURIComponent(searchValue) + '&key=' + apiKey;
+  
+      fetch(url)
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          var results = data.results;
+          if (results.length > 0) {
+            var latitude = results[0].geometry.lat;
+            var longitude = results[0].geometry.lng;
+            console.log('Latitude: ' + latitude);
+            console.log('Longitude: ' + longitude);
+  
+            // Add a marker for the location
+            const markerIcon = L.icon({
+              iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+              shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+              iconSize: [25, 41],
+              iconAnchor: [12, 41],
+              shadowSize: [41, 41]
+            });
+            const marker = L.marker([latitude, longitude], { icon: markerIcon }).addTo(map);
+            marker.bindPopup('Location').openPopup();
+  
+            // Zoom the map to the marker
+            map.setView([latitude, longitude], 14);
+  
+            // Find nearby doctors
+            findNearbyDoctors(latitude, longitude);
+          } else {
+            console.log('Location not found');
+          }
+        })
+        .catch(function(error) {
+        console.error(error);
+      });
+  }
+  
+  // Get the current location
+  navigator.geolocation.getCurrentPosition(function(position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+
+    // Find nearby doctors for the current location
+    findNearbyDoctors(latitude, longitude);
+
+    // Add a marker for the current location
+    const markerIcon = L.icon({
+      iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      shadowSize: [41, 41]
+    });
+    const marker = L.marker([latitude, longitude], { icon: markerIcon }).addTo(map);
+    marker.bindPopup('Your Location').openPopup();
+
+    // Zoom the map to the current location
+    map.setView([latitude, longitude], 14);
+  }, console.error);
+
+          
+
+  </script>
+</body>
+</html>

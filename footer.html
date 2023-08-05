@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&display=swap" rel="stylesheet">
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+
+        }
+        body{
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        .container{
+
+height:10cm;
+width:100%;
+background: rgb(211,221,251);
+background: radial-gradient(circle, rgba(211,221,251,1) 0%, rgba(201,225,252,1) 100%);
+z-index: 1;
+}
+.container img{
+    position: relative;
+    width:100%;
+    top:30%;
+    height:7cm;
+    filter:blur(3px);
+    flex-wrap: wrap;
+    z-index: 2; 
+    
+}
+.overlay{
+    background: rgb(0,0,0);
+background: linear-gradient(0deg, rgba(0,0,0,0.8884803921568627) 0%, rgba(255,255,255,0) 100%);
+    height:10cm;
+    width:100%;
+    position: absolute;
+    top:0;
+    left:0;
+    z-index: 3;
+   
+}
+.logo{
+    position: relative;
+  top:-6.5cm; 
+    display: flex;
+    flex-direction: row;
+    
+}
+.logo img{
+ 
+    height: 3cm;
+    width:5cm;
+    position: absolute;
+    
+    left:0.5cm;
+    filter: none;
+    z-index: 4;
+}
+  .container p{
+      position: absolute;
+      top:7cm;
+      left:0.5cm;
+      color: #dedfe1;
+    z-index: 4;
+    font-size: 0.4cm;
+    font-weight: 600;
+
+   }
+   .information{
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    color: #8f9094;
+   top:-5cm;
+  left:18cm;
+}
+ 
+   .information .section1{
+       margin-right: 5.5cm;
+
+   } 
+   .information .section1 ul li{
+    position: absolute;
+    z-index: 4;
+    top:12cm;
+    display: flex;
+    flex-direction: column;
+
+   }
+
+   .information .section1 ul li a {
+    color: #8f9094;
+    text-decoration: none;
+    transition: 0.5s ease-in-out;
+}
+
+.information .section1 ul li a:hover {
+    color: white;
+}
+.information .section2 ul li{
+    position: absolute;
+    z-index: 4;
+    top:12cm;
+    display: flex;
+    flex-direction: column;
+   }
+
+   .information .section2 ul li a {
+    color: #8f9094;
+    text-decoration: none;
+transition: 0.5s ease-in-out;
+}
+.information .section2 ul li a:hover {
+    color: white;
+}
+.information .section2{
+       margin-right: 8.5cm;
+
+   } 
+.information .section3 ul{
+    position: absolute;
+    z-index: 4;
+    top:12cm;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+   }
+
+.information .section3 ul li:nth-child(1){
+    color:white;
+    font-weight: bold;
+}
+
+.information .section3 ul ul{
+    position: relative;
+    top:0cm;
+
+    display: flex;
+    flex-direction: row;
+    gap:0.5cm;
+}
+
+.information .section3 ul ul li img{
+    height:0.8cm;
+    width:0.8cm;
+    filter: grayscale(100%);
+}
+
+.information .section3 ul ul li img:hover{
+    filter:none;
+}
+.logo h3{
+        position: absolute;
+        z-index: 4;
+        top:1cm;
+        right:1cm;
+        color:black;
+        font-size: 1cm;
+        font-weight: 1000;
+} 
+    </style>
+</head>
+<body>
+   <footer>
+    <div class="container">
+       <img src = "footer.png">
+    
+       <div class="overlay"></div> 
+      <div class="logo">
+        <img src = "footer_logo_b.png">
+        <h3>Start using Helix today.</h3>  
+      </div>
+    <p>
+        Find Health Workers Near You - Your Health, Our Priority
+    </p>
+    <div class="information">
+        <div class="section1">
+            <ul>
+                <li>
+                    <a href = "aboutus.html">About</a>
+                    <a href = "main.php">Doctors</a>
+                </li>
+                
+            </ul>
+        </div>
+
+        <div class="section2">
+            <ul>
+                <li>
+                    <a href = "terms_condition.html">Terms and Conditions</a>
+                    <a href = "privacy_policy.html">Privacy Policy</a>
+                </li>
+                
+            </ul> 
+        </div>
+        <div tabindex = "0" class = "section3">
+            <ul>
+                <li>
+                    Let's Chat!
+                </li>
+                <li>
+                    helix.healthwebsite@gmail.com
+                </li>
+                
+                   
+                   <ul>
+
+                       
+                       <li id = "instagram">
+                        <a href = "https://www.instagram.com/helix_.health/">
+                            <img src = "instagram.png">
+                        </a>
+                            
+                       </li>
+                       <li id = "facebook">
+                        <a href = "https://www.facebook.com/profile.php?id=100094409430041">
+                            <img src = "meta.png">
+                        </a>
+
+                       </li>
+                       <li id = "twitter">
+                        <img src = "twitter.png">
+                       </li>
+                      
+                       
+                    </ul> 
+                
+            
+                
+            </ul>
+        </div>
+    </div>
+    </div>
+   </footer> 
+</body>
+</html>

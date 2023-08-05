@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Search for Health Workers</title>
+    <style>
+      /* CSS styles for search bar and result display area */
+      #search-bar {
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="text" id="search-bar" placeholder="Enter a location">
+    <div id="result-area"></div>
+
+    <!-- Include OpenLayers library -->
+    <script src="https://cdn.jsdelivr.net/npm/ol@6.6.1/dist/ol.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ol-geocoder@3.1.7/dist/ol-geocoder.min.js"></script>
+    <script>
+      // Create a map and center it on a specific location
+      var map = new ol.Map({
+        target: 'result-area',
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM(),
+          }),
+        ],
+        view: new ol.View({
+          center: ol.proj.fromLonLat([0, 0]), // Set the initial center of the map
+          zoom: 10, // Set the initial zoom level
+        }),
+      });
+    
+      // Create a geocoder control for the search bar
+      var geocoder = new Geocoder('nominatim', {
+        provider: 'osm',
+        lang: 'en',
+        placeholder: 'Search for a location',
+        limit: 5,
+        debug: false,
+        autoComplete: true,
+        keepOpen: false,
+      });
+    
+      // Add the geocoder control to the map
+      map.addControl(geocoder);
+    
+      // Handle the "place_changed" event when a location is selected from the search results
+      geocoder.on('place_changed', function () {
+        var place = geocoder.getPlace();
+        var coordinates = place.geometry.coordinates; // Get the coordinates of the selected location
+    
+        // TODO: Perform a nearby search for health workers using the obtained coordinates
+        // You can use an API or any other data source to retrieve nearby health workers based on the location coordinates
+        // Display the results on the map or in the result area
+      });
+    </script>
+  </body>
+</html>

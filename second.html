@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content = "IE=edge">
+        <meta name = "viewport"content="width=device-width,initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,500&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Poltawski+Nowy&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@500&display=swap" rel="stylesheet">
+
+        <link rel = "stylesheet" href ="second.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<title>helix</title>
+
+
+    </head>
+    <body >
+        <div class="section1">
+
+            <div class="logo">
+                <a href = "index.html">
+                    <img src = "helix2.png">
+                </a>
+            </div>
+            
+            <div class="navigation">
+                
+                
+                <a href = "index.html">Home</a>
+                <a href = "#">Services</a>
+                <a href = "#">Feedback</a>
+            </div>
+            <div class="login">
+                <a href = "login.html">Login</a>
+            </div>
+            <div class="fix-text">
+                Get To Your Nearest
+            </div>
+            
+            
+            <video autoplay muted loop id="myVideo">
+                <source src="service2.mp4" type="video/mp4">
+            </video>
+            
+            <div id="rotating-text"></div>
+            
+            <div class="circle">
+                <div class="box1"></div>
+                <div class="box2"></div>
+                <div class="box3"></div>
+            </div> 
+        </div> 
+   <div class="section2">
+
+    <h1>Get your Location</h1>
+    <h3>Search for your Location through inbuilt location finder, or manually enter the location.</h3>
+
+
+    <div class="maps">
+        <img src = "map1.png"  id = "map1" >
+        <img src = "map2.png" id = "map2">
+        <img src = "map3.png" id = "map3">
+
+    <div class="search-bar">
+        <h3><i class = "fas fa-search"></i></h3>
+        <div id="typing-effect">
+              </div>
+    </div>
+
+    </div>
+
+   </div>
+   
+   
+   <div class="section3">
+
+   <p>Get all your nearby health workers</p>
+   <h3>After finding your user's location, check for all your nearby medical stores, dentists, specialist, clinics and hospitals. </h3>
+   
+        <div class="workers-pic">
+            <img src = "Fortis.jpg" id = "worker1">
+            <img src = "dentist.webp" id = "worker2">
+        </div>
+
+</div>
+       <div class = "section4">
+        <h2>Sign up to get Started</h2>
+
+       <div class="login-form">
+            <div class="form-logo">
+                <img src="logo_crop2.png">
+             </div>
+            <h3>Welcome to Helix</h3>
+
+            <form action="register.php" method="POST">
+                <div class="input">
+
+                    <Label for = "firstname"id = "fn">First Name</Label>
+                    <input id = "firstname"name = "firstname" placeholder="First Name" type = "text" pattern = "[A-Za-z]+" title = "Please Enter only alphabetic characters" required >
+                    
+                    <Label for = "lastname"id = "ln">Last Name</Label>
+                    <input id = "lastname"name = "lastname" placeholder="Last Name" type = "text" pattern = "[A-Za-z]+" title = "Please Enter only alphabetic characters" required >
+                    
+                    <label class="emailBox"id = "ln">Email
+                        <input type="email" class = "email"  name = "email"  id="email" placeholder="Email" required >
+                        <span class="emailText"></span>
+                    </label> 
+            
+                    <label class="passBox"id = "ln">Password
+                        <input type="password" id="password" name = "password"  placeholder="Create a password" required>
+                        <span class="passText"></span>
+                    </label> 
+                        <div class="submit">
+
+                            <button type="submit" id = "submit" name = "submit"  class = "btn-submit">Continue</button>
+                        </div>
+                        <div class="allowance">
+                            <h6>By continuing, you agree to Helix's <a href =" terms.html">Terms of Service</a> and acknowledge you have read our <a href = "privacy.html">Privacy Policy </a>.</h6> 
+                        </div>
+
+                        <p>Already a Member ? <a href = "login.html">Log in</a></p>
+                
+                        
+                    </div>
+        </form>
+       </div>
+
+       <div class="information">
+        <h5><a href = "terms.html">Terms and Conditions</a></h5>
+        <h5><a href = "privacy_policy.html">Privacy Policy </a></h5>
+        <h5><a href = "member_login.html">Member Login</a></h5>
+        <h5><a href = "contact.html">Contact us</a></h5>
+       </div>
+        
+       </div> 
+ 
+            </body> 
+            <script src = "second.js"></script>
+    </html>
+

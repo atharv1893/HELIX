@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Helix: Psychiatrist</title>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
+    <script src="https://api.opencagedata.com/geocode/v1/json?key=fb87072a45394821904e16450b724c48"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&display=swap" rel="stylesheet">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+      }
+
+      body {
+        height: 100vh;
+        display: flex;
+      }
+
+      #map {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top:0cm;
+        z-index: 1;
+      }
+      .profession-bar{
+  display: flex;
+    flex-direction: row;
+    gap:1cm;
+    z-index: 5;
+    position: absolute;
+ top:19.2cm;
+   border: 1px solid white;
+   justify-content: center;
+   align-items: center;
+   background-color: white;
+
+   font-size: 0.1cm;
+   height:0.5cm;
+   width: 100%;
+}
+.profession-bar h3{
+
+  color:black;
+  font-size: 0.35cm;
+  font-weight: 200;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.profession-bar a{
+  text-decoration: none;
+}
+.profession-bar{
+  display: flex;
+    flex-direction: row;
+    gap:1cm;
+    z-index: 5;
+    position: absolute;
+ top:19cm;
+   border: 1px solid white;
+   justify-content: center;
+   align-items: center;
+   background-color: white;
+
+   font-size: 0.1cm;
+   height:0.5cm;
+   width: 100%;
+}
+.profession-bar h3{
+
+  color:black;
+  font-size: 0.35cm;
+  font-weight: 200;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.profession-bar a{
+  text-decoration: none;
+}
+.bubble-bottom {
+  /* Modify size here: */
+  --size: 50px;
+  position: absolute;
+ top:0%;
+ left:40%;
+  width: 8.5cm;
+  height: 1.7cm;
+
+  border-bottom-right-radius:20px;
+   border-bottom-left-radius:20px;
+  z-index: 5;
+  justify-content: center; 
+  align-items: center;
+  font-size: 0.8cm;
+  background-color: #261b24;
+  animation: tag 2s infinite alternate;
+  cursor:pointer; 
+  
+
+}
+@keyframes tag{
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+  .bubble-bottom h2{
+    
+    font-family: 'Libre Baskerville', serif;
+    margin-left: 1cm;
+    color:white;
+}
+
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(208,201,168);
+background: radial-gradient(circle, rgba(208,201,168,1) 15%, rgba(204,149,192,1) 65%);
+display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+  transition: opacity 0.5s, transform 0.7s;
+  transform: translateY(0);
+  z-index: 2;
+  pointer-events: none;
+}
+
+#overlay.hidden {
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+#overlay h2{
+
+  color:#261b24;
+  font-size: 5cm;
+  position: absolute;
+  top:3cm;
+  left:22%;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+#overlay p{
+  color:black;
+  font-size: 0.45cm;
+  position: relative;
+  top:1cm;
+  left:0.5cm;
+}
+.complaint{
+  display: flex;
+  flex-direction: row;
+}
+.complaint h4{
+  position: absolute;
+  bottom:0.7cm;
+  right:1cm;
+  font-size: 0.35cm;
+  font-weight: 200;
+}
+.complaint button{
+  background-color: #e34134;
+  border:none;
+  height:0.8cm;
+  width:1.5cm;
+  border-radius: 10px;
+  font-size: 0.35cm;
+transition: 0.5s ease;
+color:white;
+pointer-events: all;
+}
+.complaint button:hover{
+  transform: scale(0.95);
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+#psychiatrist{
+  position: absolute;
+  top:20cm;
+  text-align: left;
+}
+      .leaflet-popup-content-wrapper{
+        background-color: #017b83;
+        color:white;
+        width:11cm;
+        font-size: 0.5cm;
+      }
+      .leaflet-popup-content-wrapper p{
+        color:white;
+        font-size: 0.4cm;
+      }
+      .leaflet-popup-content-wrapper .direction{
+        background-color: #dee7f6;
+        height:1cm;
+        width:3cm;
+        border:none;
+        border-radius: 5px;
+        transition: 0.5s ease;
+      position: relative;
+      left:3.5cm; 
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div id="psychiatrist" class="psychiatrist"></div>
+    <div class="profession-bar">
+      
+      <a href = "doctor.html"> 
+          <h3>Doctor</h3>
+      </a>
+  
+  <a href = "dentist.html">
+  
+      <h3>Dentist</h3>
+    
+    </a>
+  
+   <a href = "medical.html">
+     <h3>Pharmacies</h3>
+    </a> 
+   
+    <a href  = "physiotherapist.html">
+      <h3>Physiotherapist</h3>
+    </a>
+  
+    <a href = "cardiologist.html">
+      <h3>Cardiologist</h3>
+    </a>
+    
+    <a href = "dermatologist.html">
+      <h3>Dermatologist</h3>
+    </a>
+  
+    <a href = "psychiatrist.html">
+      <h3>Psychiatrist</h3>
+    </a>
+  
+    <a href = "pediatrician.html">
+      <h3>Pediatrician</h3>
+    </a>
+  
+    <a href = "gynecologist.html">
+      <h3>Gynecologist</h3>
+    </a>
+  
+    <a href = "orthopedic.html">
+      <h3>Orthopedic</h3>
+    </a>
+  
+    <a href = "opthalmologist.html">
+      <h3>Opthalmologist</h3>
+    </a>
+  
+    <a href = "veterinary.html">
+      <h3>Veterinary</h3>
+    </a>
+    </div>
+    <div id = "bubble-bottom" class="bubble-bottom">
+      <h2>Click Here</h2>
+      </div>
+      
+   
+      <div id ="overlay" class="overlay">
+        <h2>Psychiatrist</h2>
+        <br>
+        <br>
+        <p>"Psychiatrists, the architects of the mind, delve into the intricate landscapes of our thoughts and emotions, guiding us towards mental well-being "</p>
+  
+        <div class="complaint">
+          <h4>If you couldn't find your preferred psychiatrist, kindly report it here <span>  <a href = "report.html">
+            <button>Report</button>
+            </a></span></h4>
+       
+          </div>
+    <script>
+      const apiKey = "K2uhMneJS78v6v29URO_WNW6ktUisDimbYmyKDNxg6Q";
+
+      const platform = new H.service.Platform({
+        apikey: apiKey
+      });
+
+      // Initialize the map
+      const map = L.map('map').setView(['19.267924', '72.967252'], 12);
+
+      // Add the OpenStreetMap tiles to the map
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+        maxZoom: 18,
+      }).addTo(map);
+//////////////////for Thane change all long , and lat
+      function findNearbypsychiatrist(position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        // Create a service object to perform the search
+        const service = platform.getSearchService();
+
+        // Define the search parameters
+        //for thane: '19.267924', '72.967252'
+        //to track the location, just exchange the coordinates with latitude and longitude
+        const params = {
+          q: "psychiatrist",
+          at: `${'19.267924'},${'72.967252'}`,
+          radius: 0.5
+        };
+
+        // Execute the search request
+        service.discover(params, (result) => {
+          const psychiatrists = result.items;
+          const psychiatristDiv = document.getElementById("psychiatrist");
+        //  psychiatristDiv.innerHTML = "<h2>Nearby psychiatrists</h2>";
+
+          psychiatrists.forEach((psychiatrist) => {
+            const { title, position: { lat, lng }, distance, address } = psychiatrist;
+            const hosplatitude = lat;
+                       const hosplongitude = lng;
+              var kmdist = distance/1000;
+       //     psychiatristDiv.innerHTML += `<br><p><b>Name:</b> ${title}</p>
+        //    <strong>Address:</strong> ${address.label}
+        //    <p>Latitude: ${hosplatitude}, Longitude: ${hosplongitude}</p>
+        //        <strong>Distance:</strong> ${kmdist} kms 
+          //                     <br>
+           // `;
+            
+            const hospmarker = L.marker([ hosplatitude, hosplongitude]).addTo(map);
+            hospmarker.bindPopup(`<b>${title}</b><br><p><b>Location:</b> ${address.label}<br><b>Distance:</b> ${kmdist} kms</p><a href="https://www.google.com/maps/dir/?api=1&origin=${'19.267924'},${'72.967252'}&destination=${hosplatitude},${hosplongitude}" target="_blank"><button class = 'direction'>Show Direction</button></a>`).openPopup();
+          });
+        }, console.error);
+
+        // Create a request URL to fetch the location details using HERE Geocoding API
+        const geocodingUrl = `https://revgeocode.search.hereapi.com/v1/revgeocode?apikey=${apiKey}&at=${'19.267924'},${'72.967252'}`;
+
+        // Fetch the location details
+        fetch(geocodingUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            const locationName = data.items[0].address.label;
+
+            // Create a marker for the current location
+            const markerIcon = L.icon({
+  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12,41],
+  shadowSize: [41, 41]
+});
+const marker = L.marker(['19.267924', '72.967252'], { icon: markerIcon }).addTo(map);
+            marker.bindPopup(`<b>Your Location:</b> A P Shah Institute of Technology<p> ${locationName}</p>`).openPopup();
+
+          
+            // Zoom the map to the current location
+            map.setView([ '19.267924', '72.967252'], 12);
+          })
+          .catch((error) => {
+            console.error("Error: ", error);
+          });
+      }
+
+      // Get the current location
+      navigator.geolocation.getCurrentPosition(findNearbypsychiatrist, console.error);
+      let overlayVisible = true;
+const bubbleDiv = document.getElementById('bubble-bottom');
+const bubbleText = document.querySelector('#bubble-bottom h2');
+
+window.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('overlay').classList.remove('hidden');
+});
+
+document.getElementById('bubble-bottom').addEventListener('click', function() {
+  const overlay = document.getElementById('overlay');
+  overlay.classList.toggle('hidden');
+  
+  overlayVisible = !overlayVisible;
+  if (overlayVisible) {
+    bubbleText.textContent = 'Click to see the Map';
+    bubbleDiv.style.width = '14cm';
+    bubbleDiv.style.left = '33%';
+  
+  } else {
+    bubbleText.textContent = 'Psychiatrist';
+    bubbleDiv.style.width = '9cm';
+    bubbleDiv.style.left = '39%';
+  
+
+  }
+});
+
+document.getElementById('overlay').addEventListener('click', function() {
+  if (overlayVisible) {
+    const overlay = document.getElementById('overlay');
+    overlay.classList.add('hidden');
+    overlayVisible = false;
+    
+  }
+});
+
+  
+
+  </script>
+
+
+  </body>
+</html>

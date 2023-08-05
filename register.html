@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href = "register.css">
+    <title>Helix: Register</title>
+</head>
+<body>
+
+        <div class="background">
+            <img src = "login_bg.png">
+        </div>
+    <div class="overlay"></div>
+    <div class="register">
+    <div class="login-form">
+        <div class="form-logo">
+            <img src="logo_crop2.png">
+         </div>
+        <h3>Welcome to Helix</h3>
+
+      <!--  <form action="register.php" method="POST"> -->
+            <form action = "/register" method = "POST">
+            <div class="input">
+
+                <Label for = "firstname"id = "fn">First Name</Label>
+                <input id = "firstname"name = "firstname" placeholder="First Name" type = "text" pattern = "[A-Za-z]+" title = "Please Enter only alphabetic characters" required >
+                
+                <Label for = "lastname"id = "ln">Last Name</Label>
+                <input id = "lastname"name = "lastname" placeholder="Last Name" type = "text" pattern = "[A-Za-z]+" title = "Please Enter only alphabetic characters" required >
+                
+                <label class="emailBox"id = "ln">Email
+                    <input type="email" class = "email" name = "email" id="email" placeholder="Email" required >
+                    <span class="emailText"></span>
+                </label> 
+        
+                <label class="passBox"id = "ln">Password
+                    <input type="password" id="password"name = "password" placeholder="Create a password" required>
+                    <span class="passText"></span>
+                </label> 
+                    <div class="submit">
+
+                        <button type="submit" id = "submit" name = "submit"  class = "btn-submit">Continue</button>
+                    </div>
+                    <div class="allowance">
+                        <h6>By continuing, you agree to Helix's <a href =" terms.html">Terms of Service</a> and acknowledge you have read our <a href = "privacy.html">Privacy Policy </a>.</h6> 
+                    </div>
+
+                    <p>Already a Member ? <a href = "login.html">Log in</a></p>
+            
+                    
+                </div>
+    </form>
+   </div>
+   <div class="information">
+       <h5><a href = "terms.html">Terms and Conditions</a></h5>
+       <h5><a href = "privacy_policy.html">Privacy Policy </a></h5>
+       <h5><a href = "member_login.html">Member Login</a></h5>
+       <h5><a href = "contact.html">Contact us</a></h5>
+       <h5><a href = "login.html">Log In</a></h5>
+      </div>
+    </div>
+        
+<script src = "register.js"></script>
+</body>
+</html>
